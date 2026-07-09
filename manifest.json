@@ -1,0 +1,54 @@
+{
+  "id": "babelforge.process-web-demo",
+  "name": "Process Web Demo",
+  "version": "1.0.0",
+  "description": "A no-framework process-web demo module used to validate BabelChrome-managed local HTTP processes.",
+  "type": "tool",
+  "enabled": true,
+  "runtime": {
+    "type": "process-web",
+    "command": "/usr/bin/ruby",
+    "args": [
+      "server/app.rb",
+      "--port",
+      "{{ port }}"
+    ],
+    "cwd": ".",
+    "readyUrl": "http://127.0.0.1:{{ port }}/health",
+    "timeoutMs": 5000,
+    "stop": {
+      "signal": "TERM",
+      "timeoutMs": 3000
+    }
+  },
+  "routes": [
+    {
+      "scheme": "babelchrome",
+      "host": "process-web-demo",
+      "handler": "index"
+    }
+  ],
+  "fileTypes": [],
+  "hooks": [
+    "settings.section.register"
+  ],
+  "permissions": [
+    "execute-local-processes"
+  ],
+  "menuItems": [
+    {
+      "id": "process-web-demo.open",
+      "label": "Open Process Web Demo",
+      "hook": "settings.section.register",
+      "route": "babelchrome://process-web-demo",
+      "contexts": [
+        "settings.modules"
+      ]
+    }
+  ],
+  "badge": {
+    "text": "PW",
+    "textColor": "#ffffff",
+    "backgroundColor": "#0b6b7a"
+  }
+}
